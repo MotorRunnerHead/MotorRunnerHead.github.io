@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Evaluare Națională</title>
+    <style>
+        /* Design-ul paginii */
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+        #countdown {
+            font-size: 4rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            margin: 20px;
+        }
+
+        /* Stil pentru mesajele random */
+        #random-message {
+            height: 30px;
+            font-size: 1.2rem;
+            font-style: italic;
+            transition: opacity 0.5s ease-in-out;
+            margin-top: 20px;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Timp rămas până la Evaluarea Națională</h1>
+    
+    <div id="countdown">Se încarcă...</div>
+
+    <div id="random-message"></div>
+
+    <script>
+        // 1. SETEAZĂ DATA EXAMENULUI AICI (An, Lună - 1, Zi)
+        // Atenție: Lunile încep de la 0 (Ianuarie e 0, Iunie e 5)
+        const dataExamen = new Date(2026, 5, 22, 9, 0, 0).getTime();
+
+        function updateCountdown() {
+            const acum = new Date().getTime();
+            const diferenta = dataExamen - acum;
+
+            if (diferenta < 0) {
+                document.getElementById("countdown").innerHTML = "Examenul a început!";
+                return;
+            }
+
+            const zile = Math.floor(diferenta / (1000 * 60 * 60 * 24));
+            const ore = Math.floor((diferenta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minute = Math.floor((diferenta % (1000 * 60 * 60)) / (1000 * 60));
+            const secunde = Math.floor((diferenta % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                `${zile}z ${ore}h ${minute}m ${secunde}s`;
+        }
+
+        // 2. LISTA TA DE 20 DE MESAJE (Editează textul dintre ghilimele)
+        const mesaje = [
+            "Mai bun decat site-ul lui Andrei",
+            " Fdlm - Rares 2026 ",
+            "Russia better - David 2026",
+            "WE ARE CHARLIE KIRK - Andrei!",
+            "Calul stroian - Rares 2026",
+            "Fcpn - Unknown 2026.",
+            "As manca - Rares 2026.",
+            "Am avut tema la franceza? - Florin 2026",
+            "MotorHead stie inspect element",
+            "The lion doesen't himself with ortografie si punctuatie",
+            "Va-ti pus telefoanele  in cutie?.",
+            "Inca 6 luni pana la examen - David 2025-2026.",
+            "Bonjour madamoiselle! pardon, madam! Florin 2026.",
+            "Stim amandoi ca nu-ti place matematica.",
+            "O doza de liric pe zii",
+            "Spania la capsuni de anul viitor",
+            "Salahor pe viata!!",
+            "Matematica e doar logică daca vrei sa crezi asta.",
+            "Nu mi-am facut tema - David 2026.",
+            "Andrei te rog termina cu afirmatia ca nu-mi place istoria",
+            "www.youtube.com/watch?v=U06jlgpMtQs",
+        ];
+
+        function schimbaMesaj() {
+            const msgElement = document.getElementById("random-message");
+            msgElement.style.opacity = 0; // Face mesajul invizibil
+
+            setTimeout(() => {
+                const indexRandom = Math.floor(Math.random() * mesaje.length);
+                msgElement.innerText = mesaje[indexRandom];
+                msgElement.style.opacity = 1; // Îl face vizibil la loc
+            }, 500);
+        }
+
+        // Actualizări
+        setInterval(updateCountdown, 1000);
+        setInterval(schimbaMesaj, 4000); // Schimbă mesajul la fiecare 4 secunde
+        
+        updateCountdown();
+        schimbaMesaj();
+    </script>
+</body>
+</html>
